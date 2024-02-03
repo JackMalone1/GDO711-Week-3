@@ -40,6 +40,10 @@ public class DrinkCreation : MonoBehaviour
         coolnessComponentText = coolnessComponentTextObj.GetComponent<TextMeshProUGUI>();
         sweetnessComponentText = sweetnessComponentTextObj.GetComponent<TextMeshProUGUI>();
         bitternessComponentText = bitternessComponentTextObj.GetComponent<TextMeshProUGUI>();
+        
+        _baseComponent = null;
+        _secondaryComponent = null;
+        _tertiaryComponent = null;
     }
 
     public void ResetDrink()
@@ -49,6 +53,14 @@ public class DrinkCreation : MonoBehaviour
         _tertiaryComponent = null;
         
         Debug.Log("Reset");
+        
+        bitternessComponentText.text = $"Bitterness: {0}";
+        sweetnessComponentText.text = $"Sweetness: {0}";
+        coolnessComponentText.text = $"Coolness: {0}";
+        warmnessComponentText.text = $"Warmness: {0}";
+        baseComponentText.text = "---";
+        secondaryComponentText.text = "---";
+        tertiaryComponentText.text = "---";
     }
 
     public void Brew()
@@ -62,8 +74,12 @@ public class DrinkCreation : MonoBehaviour
             }
             else
             {
-                Debug.Log("Must pick all components");
+                Debug.Log("Picked wrong drink");
             }
+        }
+        else
+        {
+            Debug.Log("Must pick all components");
         }
     }
 

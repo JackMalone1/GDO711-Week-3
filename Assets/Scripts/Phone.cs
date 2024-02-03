@@ -3,13 +3,14 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.Serialization;
 using UnityEngine.UI;
 
 [RequireComponent(typeof(Image))]
 public class Phone : MonoBehaviour, IPointerClickHandler
 {
     private Image _image;
-    [SerializeField] private GameObject _other;
+    [FormerlySerializedAs("_other")] [SerializeField] private GameObject other;
 
     private void Awake()
     {
@@ -19,7 +20,7 @@ public class Phone : MonoBehaviour, IPointerClickHandler
 
     public void OnPointerClick(PointerEventData eventData)
     {
-        _other.gameObject.SetActive(true);
+        other.gameObject.SetActive(true);
         gameObject.SetActive(false);
     }
 }
