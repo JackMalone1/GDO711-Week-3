@@ -3,11 +3,14 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using Yarn;
+using Yarn.Unity;
 
 
 public class DrinkCreation : MonoBehaviour
 {
     [SerializeField] private Drink desiredDrink;
+    [SerializeField] private string conversationStartNode;
 
     private DrinkComponent _baseComponent = null;
     private DrinkComponent _secondaryComponent = null;
@@ -46,6 +49,7 @@ public class DrinkCreation : MonoBehaviour
         _tertiaryComponent = null;
     }
 
+    
     public void ResetDrink()
     {
         _baseComponent = null;
@@ -63,19 +67,32 @@ public class DrinkCreation : MonoBehaviour
         tertiaryComponentText.text = "---";
     }
 
+    
     public void Brew()
     {
         if (_baseComponent != null && _secondaryComponent != null && _tertiaryComponent != null)
         {
+            var variableStorage = GameObject.FindObjectOfType<InMemoryVariableStorage>();
+            DialogueRunner dialogueRunner = FindObjectOfType<DialogueRunner>();
+
             if (desiredDrink.baseComponent == _baseComponent && desiredDrink.secondaryComponent == _secondaryComponent
                                                              && desiredDrink.tertiaryComponent == _tertiaryComponent)
             {
                 Debug.Log("brewing");
+                variableStorage.SetValue("$correctDrink", true);
             }
             else
             {
                 Debug.Log("Picked wrong drink");
+                variableStorage.SetValue("$correctDrink", false);
             }
+
+            if (dialogueRunner.IsDialogueRunning)
+            {
+                dialogueRunner.Stop();
+            }
+            
+            dialogueRunner.StartDialogue(conversationStartNode);
         }
         else
         {
@@ -83,17 +100,20 @@ public class DrinkCreation : MonoBehaviour
         }
     }
 
+    
     public void AddComponentToDrink(DrinkComponent component)
     {
         if (_baseComponent == null)
         {
             _baseComponent = component;
             baseComponentText.text = component.name;
+            secondaryComponentText.text = "Secondary";
         }
         else if (_secondaryComponent == null)
         {
             _secondaryComponent = component;
             secondaryComponentText.text = component.name;
+            tertiaryComponentText.text = "Tertiary";
         }
         else if(_tertiaryComponent == null)
         {
@@ -104,6 +124,7 @@ public class DrinkCreation : MonoBehaviour
         Debug.Log("Added component");
     }
 
+    
     void UpdateDrinkValues()
     {
         int bitterness = 0, sweetness = 0, warmness = 0, coolness = 0;

@@ -1,5 +1,30 @@
 ﻿title: Start
 tags:
+position: -37,-7
 ---
+<<declare $correctDrink = false>>
+Jay: Welco- Oh, it's you.
+Freya: Hey Jay, how's the night so far?
+Jay: It's calm, as usual.
+Jay: We've got a slight problem, though.
+Freya: Huh, what happened?
+Jay: I don't have half of my ingredients today.
+...
+Jay: Do you want your triple shot espresso now?
+Freya: Yes, please.
+Freya: And if you forget how to make it, just check your phone, okay?
+===
 
+title: AfterCreatedDrink
+position: 274,-6
+---
+Jay: Here's your drink, made especially for you.
+<<if $correctDrink>>
+    Freya: Ahhhhh... exactly what I need.
+    Freya: Anyway, where were we?
+<<else>>
+    Freya: What is this...?
+    Freya: Blergh!
+    Freya: Are you messing with me?
+<<endif>>
 ===
